@@ -1,7 +1,11 @@
 package com.vannsha.studentlist.controller;
 
+import com.vannsha.studentlist.config.RabbitConfiguration;
 import com.vannsha.studentlist.domain.Student;
 import com.vannsha.studentlist.servise.StudentService;
+import org.springframework.amqp.core.AmqpTemplate;
+import org.springframework.amqp.core.Queue;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -30,6 +34,11 @@ public class StudentController {
     @PostMapping
     public Mono<Student> add(@Valid @RequestBody Student student) {
         return studentService.add(student);
+    }
+
+    @PostMapping("/up")
+    public Mono<Student> up(@Valid @RequestBody Student student) {
+        return studentService.update(student);
     }
 
 

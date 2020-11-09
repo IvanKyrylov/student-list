@@ -1,5 +1,6 @@
 package com.vannsha.studentlist.domain;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.vannsha.studentlist.validator.Adult;
 import com.vannsha.studentlist.validator.CorrectEmail;
 import com.vannsha.studentlist.validator.CorrectPhoneNumber;
@@ -15,6 +16,25 @@ import java.time.LocalDate;
 @Data
 @Builder
 public class Student {
+    public Student(@JsonProperty("id") Long id,
+                   @JsonProperty("name") @NotBlank(message = "{name.empty}") String name,
+                   @JsonProperty("surname") @NotBlank(message = "{surname.empty}") String surname,
+                   @JsonProperty("dateOfBirth") @Adult(message = "{dateOfBirth.adult}") LocalDate dateOfBirth,
+                   @JsonProperty("phoneNumber") @CorrectPhoneNumber(message = "{phone.incorrect}") String phoneNumber,
+                   @JsonProperty("email") @CorrectEmail(message = "{email.incorrect}") @Size(max = 100, message = "{email.maxsize}") String email,
+                   @JsonProperty("address") String address,
+                   @JsonProperty("course") Integer course,
+                   @JsonProperty("groupName") String groupName) {
+        this.id = id;
+        this.name = name;
+        this.surname = surname;
+        this.dateOfBirth = dateOfBirth;
+        this.phoneNumber = phoneNumber;
+        this.email = email;
+        this.address = address;
+        this.course = course;
+        this.groupName = groupName;
+    }
 
     @Id
     private Long id;

@@ -21,4 +21,10 @@ public class StudentService {
     public Mono<Student> add(Student student) {
         return studentRepo.save(student);
     }
+
+    public Mono<Student> update(Student student) {
+       return studentRepo.findById(student.getId())
+               .map(s -> student)
+               .flatMap(studentRepo::save);
+    }
 }
